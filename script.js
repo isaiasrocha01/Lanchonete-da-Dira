@@ -6,15 +6,15 @@ const products = [
     { id: 4, category: 'hamburgueres', name: 'X-Tudo', price: 22.00, image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo', 'Bacon', 'Ovo', 'Alface', 'Tomate', 'Milho', 'Presunto'] },
     
     // Refri Lata
-    { id: 5, category: 'bebidas-lata', name: 'Coca-Cola Lata', price: 6.00, image: './img/coca-lata.jpg' },
-    { id: 6, category: 'bebidas-lata', name: 'Coca-Cola Zero Lata', price: 6.00, image: './img/coca-zero-lata.jpg' },
-    { id: 7, category: 'bebidas-lata', name: 'Guaraná Antarctica Lata', price: 6.00, image: './img/guarana-lata.jpg' },
-    { id: 8, category: 'bebidas-lata', name: 'Guaraná Zero Lata', price: 6.00, image: './img/guarana-zero-lata.jpg' },
-    { id: 9, category: 'bebidas-lata', name: 'Fanta Laranja Lata', price: 6.00, image: './img/fanta-laranja-lata.jpg' },
-    { id: 10, category: 'bebidas-lata', name: 'Fanta Uva Lata', price: 6.00, image: './img/fanta-uva-lata.jpg' },
-    { id: 11, category: 'bebidas-lata', name: 'Sprite Lata', price: 6.00, image: './img/sprite-lata.jpg' },
-    { id: 12, category: 'bebidas-lata', name: 'Pepsi Lata', price: 6.00, image: './img/pepsi-lata.jpg' },
-    { id: 13, category: 'bebidas-lata', name: 'Sukita Lata', price: 6.00, image: './img/sukita-lata.jpg' },
+    { id: 5, category: 'bebidas-lata', name: 'Coca-Cola Lata', price: 6.00, image: 'img/coca-lata.jpg' },
+    { id: 6, category: 'bebidas-lata', name: 'Coca-Cola Zero Lata', price: 6.00, image: 'img/coca-zero-lata.jpg' },
+    { id: 7, category: 'bebidas-lata', name: 'Guaraná Antarctica Lata', price: 6.00, image: 'img/guarana-lata.jpg' },
+    { id: 8, category: 'bebidas-lata', name: 'Guaraná Zero Lata', price: 6.00, image: 'img/guarana-zero-lata.jpg' },
+    { id: 9, category: 'bebidas-lata', name: 'Fanta Laranja Lata', price: 6.00, image: 'img/fanta-laranja-lata.jpg' },
+    { id: 10, category: 'bebidas-lata', name: 'Fanta Uva Lata', price: 6.00, image: 'img/fanta-uva-lata.jpg' },
+    { id: 11, category: 'bebidas-lata', name: 'Sprite Lata', price: 6.00, image: 'img/sprite-lata.jpg' },
+    { id: 12, category: 'bebidas-lata', name: 'Pepsi Lata', price: 6.00, image: 'img/pepsi-lata.jpg' },
+    { id: 13, category: 'bebidas-lata', name: 'Sukita Lata', price: 6.00, image: 'img/sukita-lata.jpg' },
 
     // Refri 1L
     { id: 14, category: 'bebidas-1l', name: 'Coca-Cola 1L', price: 9.00, image: 'img/coca-1l.jpg' },
@@ -96,7 +96,8 @@ async function buscarCEP() {
 
         // Define o custo do frete baseado no bairro retornado
         shippingCost = neighborhoodPrices[bairroApi] || neighborhoodPrices['Outros'];
-        document.getElementById('bairro').value = `${bairroApi} (Frete: R$ ${shippingCost.toFixed(2).replace('.', ',')})`;
+        document.getElementById('bairro').value = bairroApi;
+        document.getElementById('frete-info').value = `Frete: R$ ${shippingCost.toFixed(2).replace('.', ',')}`;
 
         renderCart(); // Atualiza o total com o novo frete
     } catch (error) {
