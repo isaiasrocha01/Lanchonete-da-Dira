@@ -1,3 +1,6 @@
+// Inicialização do EmailJS (Você precisará substituir o campo abaixo pela sua Public Key)
+emailjs.init("xaFurKAu6y-pkVsqe");
+
 // Dados dos Produtos
 const products = [
     { id: 1, category: 'hamburgueres', name: 'X-Burger', price: 12.00, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo'] },
@@ -325,6 +328,29 @@ function finishOrder() {
         const adicionais = item.selectedExtras.length > 0 ? `\n   + EXTRAS: ${item.selectedExtras.map(e => `${e.qty}x ${e.name}`).join(', ')}` : '';
         itensMsg += `* ${item.qty}x ${item.name}${removidos}${adicionais}\n`;
     });
+
+    // Envio de Cópia de Segurança para o E-mail (Anti-Fraude)
+    // Enviamos antes do WhatsApp para garantir o registro dos dados originais
+    const emailParams = {
+        cliente_nome: nome,
+        cliente_contato: tel,
+        endereco_entrega: `${end}, nº ${num} - ${bairro}`,
+        resumo_pedido: itensMsg.replace(/\*/g, ''), // Limpa a formatação de WhatsApp para o e-mail
+        valor_total: total.toFixed(2),
+        destinatario: 'isaiasrocha.dev@outlook.com'
+    };
+
+    // Substitua os campos abaixo pelos IDs reais do seu painel EmailJS
+    const SERVICE_ID = "service_ch627pj";   // ID do serviço Outlook configurado
+    const TEMPLATE_ID = "template_0sxh2pk";
+
+    emailjs.send(SERVICE_ID, TEMPLATE_ID, emailParams)
+        .then(() => console.log("Cópia de segurança enviada ao e-mail com sucesso!"))
+        .catch(err => {
+            console.error("Erro detalhado do EmailJS:", err);
+            // Se o erro for 'service_id' ou 'template_id' inválido, o problema está nos IDs acima.
+            alert("Erro no envio do e-mail: " + (err.text || "Verifique se o Service ID e o Template ID estão corretos no script.js"));
+        });
 
     // Monta a mensagem (EncodeURIComponent cuida dos espaços e quebras de linha)
     const mensagem = encodeURIComponent(
