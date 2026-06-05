@@ -57,7 +57,7 @@ header .container { display: flex; justify-content: space-between; align-items: 
 .sidebar {
     width: 250px;
     position: sticky; /* Mantém fixo ao rolar */
-    top: 125px; /* Distância maior do topo para criar um respiro */
+    top: 150px; /* Distância maior do topo para criar um respiro */
     z-index: 1000;
     background: white;
     padding: 15px;
@@ -260,7 +260,7 @@ input, select {
     #checkout-form {
         width: 380px; /* Largura fixa para o formulário na direita */
         position: sticky;
-        top: 125px; 
+        top: 150px; 
         flex-shrink: 0;
     }
 }
