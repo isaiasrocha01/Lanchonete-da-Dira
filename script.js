@@ -4,7 +4,7 @@ const products = [
     { id: 2, category: 'hamburgueres', name: 'X-Salada', price: 15.00, image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo', 'Alface', 'Tomate', 'Maionese'] },
     { id: 3, category: 'hamburgueres', name: 'X-Bacon', price: 18.00, image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo', 'Bacon'] },
     { id: 4, category: 'hamburgueres', name: 'X-Tudo', price: 22.00, image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo', 'Bacon', 'Ovo', 'Alface', 'Tomate', 'Milho', 'Presunto'] },
-    
+     
     // Refri Lata
     { id: 5, category: 'bebidas-lata', name: 'Coca-Cola Lata', price: 6.00, image: 'img/coca-lata.jpg' },
     { id: 6, category: 'bebidas-lata', name: 'Coca-Cola Zero Lata', price: 6.00, image: 'img/coca-zero-lata.jpg' },
