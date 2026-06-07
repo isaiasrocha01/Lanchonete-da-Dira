@@ -1,80 +1,26 @@
-// Inicialização do EmailJS (Você precisará substituir o campo abaixo pela sua Public Key)
+// ============================================
+// LANCHONETE DA DIRA - SCRIPT PRINCIPAL
+// ============================================
+
+// Inicialização do EmailJS
 emailjs.init("xaFurKAu6y-pkVsqe");
 
-// Dados dos Produtos
-const products = [
-    { id: 1, category: 'hamburgueres', name: 'X-Burger', price: 12.00, image: 'https://images.unsplash.com/photo-1568901346375-23c9450c58cd?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo'] },
-    { id: 2, category: 'hamburgueres', name: 'X-Salada', price: 15.00, image: 'https://images.unsplash.com/photo-1550547660-d9450f859349?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo', 'Alface', 'Tomate', 'Maionese'] },
-    { id: 3, category: 'hamburgueres', name: 'X-Bacon', price: 18.00, image: 'https://images.unsplash.com/photo-1553979459-d2229ba7433b?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo', 'Bacon'] },
-    { id: 4, category: 'hamburgueres', name: 'X-Tudo', price: 22.00, image: 'https://images.unsplash.com/photo-1594212699903-ec8a3eca50f5?auto=format&fit=crop&w=300&q=80', ingredients: ['Pão', 'Carne', 'Queijo', 'Bacon', 'Ovo', 'Alface', 'Tomate', 'Milho', 'Presunto'] },
-     
-    // Refri Lata
-    { id: 5, category: 'bebidas-lata', name: 'Coca-Cola Lata', price: 6.00, image: 'img/coca-lata.jpg' },
-    { id: 6, category: 'bebidas-lata', name: 'Coca-Cola Zero Lata', price: 6.00, image: 'img/coca-zero-lata.jpg' },
-    { id: 7, category: 'bebidas-lata', name: 'Guaraná Antarctica Lata', price: 6.00, image: 'img/guarana-lata.jpg' },
-    { id: 8, category: 'bebidas-lata', name: 'Guaraná Zero Lata', price: 6.00, image: 'img/guarana-zero-lata.jpg' },
-    { id: 9, category: 'bebidas-lata', name: 'Fanta Laranja Lata', price: 6.00, image: 'img/fanta-laranja-lata.jpg' },
-    { id: 10, category: 'bebidas-lata', name: 'Fanta Uva Lata', price: 6.00, image: 'img/fanta-uva-lata.jpg' },
-    { id: 11, category: 'bebidas-lata', name: 'Sprite Lata', price: 6.00, image: 'img/sprite-lata.jpg' },
-    { id: 12, category: 'bebidas-lata', name: 'Pepsi Lata', price: 6.00, image: 'img/pepsi-lata.jpg' },
-    { id: 13, category: 'bebidas-lata', name: 'Sukita Lata', price: 6.00, image: 'img/sukita-lata.jpg' },
+// Constantes
+const API_URL = "http://localhost:3000/api";
+const token = localStorage.getItem('token');
 
-    // Refri 1L
-    { id: 14, category: 'bebidas-1l', name: 'Coca-Cola 1L', price: 9.00, image: 'img/coca-1l.jpg' },
-    { id: 15, category: 'bebidas-1l', name: 'Coca-Cola Zero 1L', price: 9.00, image: 'img/coca-zero-1l.jpg' },
-    { id: 16, category: 'bebidas-1l', name: 'Guaraná Antarctica 1L', price: 8.00, image: 'img/guarana-1l.jpg' },
-    { id: 17, category: 'bebidas-1l', name: 'Fanta Laranja 1L', price: 8.00, image: 'img/fanta-laranja-1l.jpg' },
+// Variáveis Globais
+let currentModalExtras = {};
+let products = [];
+let cart = [];
+let shippingCost = 0;
 
-    // Refri 2L
-    { id: 18, category: 'bebidas-2l', name: 'Coca-Cola 2L', price: 13.00, image: 'img/coca-2l.jpg' },
-    { id: 19, category: 'bebidas-2l', name: 'Guaraná Antarctica 2L', price: 11.00, image: 'img/guarana-2l.jpg' },
-    { id: 20, category: 'bebidas-2l', name: 'Energético 2L', price: 15.00, image: 'img/energetico-2l.jpg' },
-
-    // Águas
-    { id: 21, category: 'aguas', name: 'Água Mineral sem gás 500ml', price: 3.00, image: 'img/agua.jpg' },
-    { id: 22, category: 'aguas', name: 'Água Mineral com gás 500ml', price: 4.00, image: 'img/agua-gas.jpg' },
-    { id: 23, category: 'aguas', name: 'Água de Coco', price: 6.00, image: 'img/agua-coco.jpg' },
-
-    // Sucos
-    { id: 24, category: 'sucos', name: 'Suco de Laranja', price: 8.00, image: 'img/suco-laranja.jpg' },
-    { id: 25, category: 'sucos', name: 'Suco de Maracujá', price: 8.00, image: 'img/suco-maracuja.jpg' },
-    { id: 26, category: 'sucos', name: 'Suco Detox', price: 10.00, image: 'img/suco-detox.jpg' },
-
-    // Vitaminas
-    { id: 27, category: 'vitaminas', name: 'Vitamina de Banana', price: 10.00, image: 'img/vitamina-banana.jpg' },
-    { id: 28, category: 'vitaminas', name: 'Vitamina de Morango', price: 12.00, image: 'img/vitamina-morango.jpg' },
-
-    // Cafés
-    { id: 29, category: 'cafes', name: 'Café sem Leite', price: 3.00, image: 'img/cafe.jpg' },
-    { id: 30, category: 'cafes', name: 'Café com Leite', price: 4.50, image: 'img/cafe-leite.jpg' },
-
-    // Cremosas
-    { id: 31, category: 'cremosas', name: 'Chocolate Quente', price: 8.00, image: 'img/chocolate-quente.jpg' },
-    { id: 32, category: 'cremosas', name: 'Achocolatado Gelado', price: 7.00, image: 'img/achocolatado-gelado.jpg' },
-
-    { id: 33, category: 'porcoes', name: 'Batata Frita P', price: 12.00, image: 'img/batata-frita.jpg', ingredients: ['Sal', 'Ketchup', 'Maionese'] },
-    { id: 34, category: 'porcoes', name: 'Batata Frita M', price: 18.00, image: 'img/batata-frita.jpg', ingredients: ['Sal', 'Ketchup', 'Maionese'] },
-    { id: 35, category: 'porcoes', name: 'Batata Frita G', price: 25.00, image: 'img/batata-frita.jpg', ingredients: ['Sal', 'Ketchup', 'Maionese'] },
-];
-
-// Opções de Adicionais com Preços
+// Opções de Adicionais
 const extraOptions = [
     { name: 'Carne Extra', price: 5.00 },
     { name: 'Queijo Extra', price: 3.00 },
-    { name: 'Bacon Extra', price: 4.00 },
+    { name: 'Bacon Extra', price: 4.00 }
 ];
-
-let cart = [];
-let shippingCost = 0;
-let currentModalExtras = {}; // Armazena temporariamente os extras do modal aberto
-
-// Tabela de preços de frete por bairro
-const neighborhoodPrices = {
-    'Centro': 5.00,
-    'Liberdade': 7.00,
-    'Cajazeiras': 10.00,
-    'Outros': 12.00
-};
 
 // Função para buscar o endereço via CEP (API ViaCEP)
 async function buscarCEP() {
@@ -96,10 +42,13 @@ async function buscarCEP() {
         // Preenche os campos automaticamente
         document.getElementById('endereco').value = data.logradouro || '';
         const bairroApi = data.bairro || '';
-
-        // Define o custo do frete baseado no bairro retornado
-        shippingCost = neighborhoodPrices[bairroApi] || neighborhoodPrices['Outros'];
         document.getElementById('bairro').value = bairroApi;
+
+        // Busca frete dinâmico no backend
+        const shipRes = await fetch(`${API_URL}/shipping?bairro=${bairroApi}`);
+        const shipData = await shipRes.json();
+        shippingCost = shipData.price || 12.00;
+        
         document.getElementById('frete-info').value = `Frete: R$ ${shippingCost.toFixed(2).replace('.', ',')}`;
 
         renderCart(); // Atualiza o total com o novo frete
@@ -121,11 +70,33 @@ function changeExtraQty(extraName, delta) {
 }
 
 // Inicializar Menu
-function initMenu() {
+async function initMenu() {
+    const res = await fetch(`${API_URL}/products`);
+    products = await res.json();
+    
+    const user = JSON.parse(localStorage.getItem('user'));
+    const isAdmin = user && user.role === 'ADMIN';
+    
     products.forEach(product => {
         const container = document.getElementById(product.category);
+        if (!container) return;
         const card = document.createElement('div');
         card.className = 'product-card';
+        
+        let adminButtons = '';
+        if (isAdmin) {
+            adminButtons = `
+                <div style="display: flex; gap: 5px; margin-top: 5px;">
+                    <button class="btn-add" onclick="editProduct(${product.id})" style="flex: 1; background: var(--secondary); color: var(--dark);">
+                        <i class="fas fa-edit"></i> Editar
+                    </button>
+                    <button class="btn-add" onclick="deleteProduct(${product.id})" style="flex: 1; background: #d32f2f;">
+                        <i class="fas fa-trash"></i> Deletar
+                    </button>
+                </div>
+            `;
+        }
+        
         card.innerHTML = `
             <img src="${product.image}" alt="${product.name}" class="product-img">
             <div class="product-info">
@@ -135,6 +106,7 @@ function initMenu() {
             <button class="btn-add" onclick="openCustomModal(${product.id})">
                 <i class="fas fa-plus"></i> Adicionar
             </button>
+            ${adminButtons}
         `;
         container.appendChild(card);
     });
@@ -324,35 +296,45 @@ function finishOrder() {
     // Formata itens do pedido
     let itensMsg = '';
     cart.forEach(item => {
-        const removidos = item.removedIngredients.length > 0 ? `\n   - REMOVER: ${item.removedIngredients.join(', ')}` : '';
+        const removidos = item.removedIngredients.length > 0 ? `\n   - REMOVER: ${item.removedIngredientes.join(', ')}` : '';
         const adicionais = item.selectedExtras.length > 0 ? `\n   + EXTRAS: ${item.selectedExtras.map(e => `${e.qty}x ${e.name}`).join(', ')}` : '';
         itensMsg += `* ${item.qty}x ${item.name}${removidos}${adicionais}\n`;
     });
 
     // Envio de Cópia de Segurança para o E-mail (Anti-Fraude)
-    // Enviamos antes do WhatsApp para garantir o registro dos dados originais
     const emailParams = {
         cliente_nome: nome,
         cliente_contato: tel,
         endereco_entrega: `${end}, nº ${num} - ${bairro}`,
-        resumo_pedido: itensMsg.replace(/\*/g, ''), // Limpa a formatação de WhatsApp para o e-mail
+        resumo_pedido: itensMsg.replace(/\*/g, ''),
         valor_total: total.toFixed(2),
         destinatario: 'isaiasrocha.dev@outlook.com'
     };
 
-    // Substitua os campos abaixo pelos IDs reais do seu painel EmailJS
-    const SERVICE_ID = "service_ch627pj";   // ID do serviço Outlook configurado
+    const SERVICE_ID = "service_ch627pj";
     const TEMPLATE_ID = "template_0sxh2pk";
 
     emailjs.send(SERVICE_ID, TEMPLATE_ID, emailParams)
         .then(() => console.log("Cópia de segurança enviada ao e-mail com sucesso!"))
         .catch(err => {
             console.error("Erro detalhado do EmailJS:", err);
-            // Se o erro for 'service_id' ou 'template_id' inválido, o problema está nos IDs acima.
-            alert("Erro no envio do e-mail: " + (err.text || "Verifique se o Service ID e o Template ID estão corretos no script.js"));
+            alert("Erro no envio do e-mail: " + (err.text || "Verifique os IDs no script.js"));
         });
 
-    // Monta a mensagem (EncodeURIComponent cuida dos espaços e quebras de linha)
+    fetch(`${API_URL}/orders`, {
+        method: 'POST',
+        headers: { 
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({ cart, subtotal, shippingCost, total, addressData: { end, num, bairro } })
+    }).then(res => {
+        if (res.status === 401 || res.status === 403) {
+            alert("Sua sessão expirou. Por favor, faça login novamente.");
+            logout();
+        }
+    }).catch(err => console.error("Erro ao salvar pedido:", err));
+
     const mensagem = encodeURIComponent(
 `🍔 *NOVO PEDIDO - LANCHONETE DA DIRA*
 
@@ -380,5 +362,164 @@ Obrigado!`);
     window.open(whatsappUrl, '_blank');
 }
 
+// Atualizar interface com nome do usuário logado
+async function updateAuthUI() {
+    const userMenu = document.getElementById('user-menu');
+    let user = JSON.parse(localStorage.getItem('user'));
+    
+    if (user && userMenu) {
+        let adminButton = '';
+        if (user.role === 'ADMIN') {
+            adminButton = `<button onclick="openProductModal()" class="btn-add" style="background: var(--secondary); color: var(--dark); margin-right:10px;">
+                    <i class="fas fa-plus"></i> Novo Produto
+                </button>`;
+        }
+        
+        userMenu.innerHTML = `
+            ${adminButton}
+            <span style="color: white; margin-right: 10px;">Olá, ${user.name.split(' ')[0]}</span>
+            <button onclick="logout()" class="btn-add" style="margin: 0; padding: 5px 10px; background: var(--dark);">Sair</button>
+        `;
+
+        // Preenche automaticamente o formulário de entrega
+        if (document.getElementById('nome')) {
+            document.getElementById('nome').value = user.name || '';
+            document.getElementById('telefone').value = user.phone || '';
+            document.getElementById('cep').value = user.cep || '';
+            document.getElementById('endereco').value = user.address || '';
+            document.getElementById('numero').value = user.number || '';
+            document.getElementById('bairro').value = user.neighborhood || '';
+            document.getElementById('complemento').value = user.complement || '';
+            document.getElementById('referencia').value = user.reference || '';
+            
+            if (user.neighborhood) buscarCEP();
+        }
+    }
+}
+
+function logout() {
+    localStorage.clear();
+    window.location.reload();
+}
+
+// ===== FUNÇÕES DE GERENCIAMENTO DE PRODUTOS (ADMIN) =====
+
+function openProductModal(id = null) {
+    const modal = document.getElementById('product-modal');
+    const form = document.getElementById('product-form');
+    const titleEl = document.getElementById('product-modal-title');
+    
+    titleEl.innerText = id ? 'Editar Produto' : 'Novo Produto';
+    
+    if (id) {
+        const product = products.find(p => p.id === id);
+        if (!product) {
+            alert('Produto não encontrado!');
+            return;
+        }
+        document.getElementById('prod-id').value = product.id;
+        document.getElementById('prod-category').value = product.category_id || 1;
+        document.getElementById('prod-name').value = product.name;
+        document.getElementById('prod-description').value = product.description || '';
+        document.getElementById('prod-price').value = product.price;
+        document.getElementById('prod-ingredients').value = Array.isArray(product.ingredients) ? product.ingredients.join(', ') : '';
+        document.getElementById('prod-image').value = product.image || '';
+    } else {
+        form.reset();
+        document.getElementById('prod-id').value = '';
+    }
+    
+    modal.style.display = 'block';
+}
+
+function closeProductModal() {
+    document.getElementById('product-modal').style.display = 'none';
+}
+
+function editProduct(id) {
+    openProductModal(id);
+}
+
+async function saveProduct() {
+    const id = document.getElementById('prod-id').value;
+    const productData = {
+        category_id: parseInt(document.getElementById('prod-category').value),
+        name: document.getElementById('prod-name').value,
+        description: document.getElementById('prod-description').value,
+        price: parseFloat(document.getElementById('prod-price').value),
+        ingredients: document.getElementById('prod-ingredients').value
+            .split(',')
+            .map(i => i.trim())
+            .filter(i => i !== ''),
+        image_url: document.getElementById('prod-image').value
+    };
+
+    if (!productData.name || !productData.price || !productData.category_id) {
+        alert('Preencha todos os campos obrigatórios!');
+        return;
+    }
+
+    const method = id ? 'PUT' : 'POST';
+    const url = id ? `${API_URL}/products/${id}` : `${API_URL}/products`;
+
+    try {
+        const res = await fetch(url, {
+            method: method,
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            },
+            body: JSON.stringify(productData)
+        });
+
+        if (res.ok) {
+            alert(id ? 'Produto atualizado com sucesso!' : 'Produto criado com sucesso!');
+            closeProductModal();
+            location.reload();
+        } else {
+            const error = await res.json();
+            alert(`Erro: ${error.error || 'Erro ao salvar produto'}`);
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao salvar produto: ' + error.message);
+    }
+}
+
+async function deleteProduct(id) {
+    if (!confirm('Tem certeza que deseja excluir este produto?')) return;
+
+    try {
+        const res = await fetch(`${API_URL}/products/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Authorization': `Bearer ${token}`
+            }
+        });
+
+        if (res.ok) {
+            alert('Produto excluído com sucesso!');
+            location.reload();
+        } else {
+            const error = await res.json();
+            alert(`Erro: ${error.error || 'Erro ao excluir produto'}`);
+        }
+    } catch (error) {
+        console.error('Erro:', error);
+        alert('Erro ao excluir produto: ' + error.message);
+    }
+}
+
 // Inicialização
-initMenu();
+(async () => {
+    await initMenu();
+    await updateAuthUI();
+
+    const productForm = document.getElementById('product-form');
+    if (productForm) {
+        productForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            saveProduct();
+        });
+    }
+})();
