@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="style.css">
     <!-- Ícones -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <!-- EmailJS SDK: Responsável por enviar a cópia de segurança para o seu e-mail -->
+    <!-- EmailJS SDK -->
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
@@ -21,15 +21,22 @@
                 <img src="./img/logo.png" alt="Logo Lanchonete da Dira" class="logo-img">
                 <h1>Lanchonete da Dira</h1>
             </div>
-            <div class="cart-icon" onclick="toggleCart()">
-                <i class="fas fa-shopping-cart"></i>
-                <span id="cart-count">0</span>
+            <div class="header-actions">
+                <div class="cart-icon" onclick="toggleCart()">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span id="cart-count">0</span>
+                </div>
+                <div id="user-menu" class="user-info">
+                    <!-- Preenchido via JavaScript -->
+                    <a href="login.html" class="btn-login">Entrar</a>
+                    <a href="cadastro.html" class="btn-register">Cadastrar</a>
+                </div>
             </div>
         </div>
     </header>
 
     <main class="container main-layout">
-        <!-- Barra Lateral de Navegação (Fixa à esquerda no Desktop) -->
+        <!-- Barra Lateral de Navegação -->
         <nav class="sidebar">
             <ul>
                 <li><a href="#hamburgueres"><i class="fas fa-hamburger"></i> Hambúrgueres</a></li>
@@ -127,7 +134,40 @@
         </div>
     </div>
 
-    <!-- Modal de Personalização (Sub-página) -->
+    <!-- Modal de Gerenciamento de Produto (Novo/Editar) -->
+    <div id="product-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="closeProductModal()">&times;</span>
+            <h2 id="product-modal-title">Novo Produto</h2>
+            <form id="product-form" style="display: flex; flex-direction: column; gap: 10px; margin-top: 20px;">
+                <input type="hidden" id="prod-id">
+                <select id="prod-category" required>
+                    <option value="">-- Selecione uma categoria --</option>
+                    <option value="1">Hambúrgueres</option>
+                    <option value="2">Bebidas Lata</option>
+                    <option value="3">Porções</option>
+                    <option value="4">Refri 1L</option>
+                    <option value="5">Refri 2L</option>
+                    <option value="6">Águas</option>
+                    <option value="7">Sucos</option>
+                    <option value="8">Vitaminas</option>
+                    <option value="9">Cafés</option>
+                    <option value="10">Cremosas</option>
+                </select>
+                <input type="text" id="prod-name" placeholder="Nome do Produto" required>
+                <textarea id="prod-description" placeholder="Descrição" rows="3"></textarea>
+                <input type="number" id="prod-price" step="0.01" placeholder="Preço (Ex: 15.50)" required>
+                <input type="text" id="prod-ingredients" placeholder="Ingredientes (separados por vírgula)">
+                <input type="text" id="prod-image" placeholder="URL da Imagem">
+                
+                <button type="submit" class="btn-finish" style="background: var(--dark);">
+                    <i class="fas fa-save"></i> Salvar Produto
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal de Personalização -->
     <div id="custom-modal" class="modal">
         <div class="modal-content">
             <span class="close" onclick="closeCustomModal()">&times;</span>
