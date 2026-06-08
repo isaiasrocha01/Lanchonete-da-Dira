@@ -37,4 +37,4 @@ O projeto está estruturado de forma modular no JavaScript:
 O sistema foi desenhado com foco em dispositivos móveis (Mobile First), garantindo que o cliente possa fazer o pedido de qualquer lugar com facilidade.
 
 ---
-Desvolvido por [Seu Nome/HSA]
+Desvolvido por [Isaías Rocha]
